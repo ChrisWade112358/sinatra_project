@@ -5,16 +5,21 @@ class SessionsController < ApplicationController
     end
 
     post '/login' do
-        binding.pry
+        
         user = User.find_by(username: params[:username])
+        binding.pry
         if user && user.authenticate(params[:password])
             session[:user_id] = user.id
             session[:user_name] = user.name
             session[:user_email] = user.email
-            redirect '/managment/index'
+            redirect '/users/index'
         else
             redirect '/login'
         end
+    end
+
+    get '/users/index' do
+        erb :"users/index"
     end
 
     get '/logout' do
