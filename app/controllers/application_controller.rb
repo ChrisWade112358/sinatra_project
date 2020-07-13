@@ -1,6 +1,7 @@
 require './config/environment'
 
 class ApplicationController < Sinatra::Base
+  
 
   configure do
     set :public_folder, 'public'
@@ -22,6 +23,14 @@ class ApplicationController < Sinatra::Base
     def current_user
       @user ||= User.find_by_id(session[:user_id]) if logged_in?
     end
+
+    def require_login
+      unless logged_in?
+        flash[:error] = "You must be logged in to view this page"
+        redirect "/login"
+      end
+    end
+
   end
 
 end
