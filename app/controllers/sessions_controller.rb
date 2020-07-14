@@ -1,10 +1,10 @@
 class SessionsController < ApplicationController
     
-    get '/login' do
+    get '/user/login' do
         erb :"sessions/login"
     end
 
-    post '/login' do
+    post 'user/login' do
         
         user = User.find_by(username: params[:username])
         binding.pry
@@ -12,13 +12,13 @@ class SessionsController < ApplicationController
             session[:user_id] = user.id
             session[:user_name] = user.name
             session[:user_email] = user.email
-            redirect '/users/index'
+            redirect '/user/index'
         else
-            redirect '/login'
+            redirect 'user/login'
         end
     end
 
-    get '/users/index' do
+    get '/user/index' do
         erb :"users/index"
     end
 
